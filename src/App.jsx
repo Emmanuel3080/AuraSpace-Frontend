@@ -33,7 +33,7 @@ import MyTickets from "./Dashboard/Users/MyTickets";
 import AllEventsPage from "./Dashboard/Users/AllEventsPage";
 import About from "./Dashboard/Users/AboutUspage";
 
-import LandingPage from "./Dashboard/Users/LandingPage";
+import UserLandingPage from "./Dashboard/Users/LandingPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -60,7 +60,7 @@ function App() {
               }}
             />
             <Routes>
-              <Route path="/accountType" element={<LandingPage />} />
+              <Route path="/accountType" element={<user />} />
               <Route path="/forgot/password" element={<ForgotPasswordPage />} />
               <Route path="/user/verify/otp" element={<VerifyOtpPage />} />
               {/* <Route path="/admin/createAccount" element={<AdminSignUp />} /> */}
@@ -69,7 +69,7 @@ function App() {
                 element={<ChangePasswordPage />}
               />
 
-              <Route path="/" element={<LandingPage />} />
+              <Route path="/" element={<UserLandingPage />} />
 
               <Route path="/user/signup" element={<SignUp_Page />} />
               <Route path="/user/signin" element={<SignIn_Page />} />
