@@ -33,6 +33,8 @@ import MyTickets from "./Dashboard/Users/MyTickets";
 import AllEventsPage from "./Dashboard/Users/AllEventsPage";
 import About from "./Dashboard/Users/AboutUspage";
 
+import LandingPage from "./Dashboard/Users/LandingPage";
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -67,6 +69,8 @@ function App() {
                 element={<ChangePasswordPage />}
               />
 
+              <Route path="/" element={<LandingPage />} />
+
               <Route path="/user/signup" element={<SignUp_Page />} />
               <Route path="/user/signin" element={<SignIn_Page />} />
 
@@ -76,7 +80,7 @@ function App() {
                 <Route path="/event/:eventId" element={<SingleEventsPage />} />
                 <Route path="/tickets/:bookingId" element={<MyTickets />} />
                 <Route path="/events" element={<AllEventsPage />} />
-                <Route path="/about" element={<About/>} />
+                <Route path="/about" element={<About />} />
               </Route>
 
               {/* Admin protected Route */}
