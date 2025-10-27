@@ -60,7 +60,7 @@ function App() {
               }}
             />
             <Routes>
-              <Route path="/accountType" element={<user />} />
+              <Route path="/accountType" element={<LandingPage />} />
               <Route path="/forgot/password" element={<ForgotPasswordPage />} />
               <Route path="/user/verify/otp" element={<VerifyOtpPage />} />
               {/* <Route path="/admin/createAccount" element={<AdminSignUp />} /> */}
