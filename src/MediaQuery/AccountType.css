@@ -1,0 +1,58 @@
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .account-container {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 10px;
+  }
+
+  .account-users {
+    width: 100%; /* Full width on mobile */
+    padding: 1rem;
+  }
+
+  .userType {
+    font-size: 16px;
+  }
+
+  .userTypeRole {
+    font-size: 13px;
+    line-height: 140%;
+  }
+
+  .continue-button {
+    /* width: 100%; */
+    /* padding: 0.8rem; */
+  }
+
+  .userTypeLink {
+    padding: 0.8rem;
+    font-size: 14px;
+    /* display: block; */
+    text-align: center;
+  }
+}
+
+/* Very small devices (like < 480px) */
+@media screen and (max-width: 480px) {
+  .auraTitle {
+    font-size: 24px;
+  }
+
+  .accountTitle {
+    font-size: 22px;
+  }
+
+  .accountSubTitle {
+    font-size: 13px;
+    padding: 0 10px;
+  }
+
+  .account-users {
+    padding: 0.8rem;
+  }
+
+  .continue-button {
+    /* font-size: 13px; */
+  }
+}

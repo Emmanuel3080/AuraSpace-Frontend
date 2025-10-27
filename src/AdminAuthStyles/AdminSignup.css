@@ -1,0 +1,113 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+.AdminSignUpPage {
+  background-image: url("../../public/HeroImg.jpg");
+  background-repeat: no-repeat;
+  background-position: 10% 80%;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.AdminSignUpForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* height: 100vh; */
+  /* padding: 10rem; */
+  width: 100%;
+}
+
+.AdminFormContainer {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0.4rem 1rem;
+  width: 100%;
+  width: 500px; /* ⬅️ wider container */
+  /* min-height: 100vh; */
+  /* height:100vh; */
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  /* margin: 7rem 4rem; */
+  /* margin-top: 5rem;
+  margin-bottom: 5rem; */
+}
+
+.formHead {
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  /* margin-bottom: 20px; */
+  color: black;
+  font-weight: 700;
+  font-size: clamp(1.1rem, calc(2vw + 1rem), 2rem);
+}
+.AdminFormContainer label {
+  font-family: "Poppins", sans-serif;
+  /* display: block; */
+  font-size: 15px;
+  font-weight: 600;
+  /* padding-top: 20px; */
+  color: black;
+}
+.AdminFormContainer input::placeholder {
+  color: black;
+}
+
+.nameInput,
+.emailInput,
+.passwordInput,
+.phoneInput {
+  width: 100%;
+  padding: 12px;
+  /* margin-bottom: 18px; */
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.formInputs {
+  width: 100%;
+  padding: 12px;
+  /* margin-bottom: 18px; */
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: black;
+  /* flex-basis: 1; */
+}
+.inputGroup {
+  flex: 1;
+  /* padding: 10px; */
+}
+.inputCont {
+  width: 100%;
+  backdrop-filter: blur(10px);
+  background-color: rgba(128, 89, 89, 0.081);
+  display: flex;
+  align-items: center;
+  /* margin: 10px; */
+  /* flex-direction: row; */
+  /* justify-content: space-between; */
+  gap: 10px;
+}
+.icon {
+  padding: 1px;
+  i {
+    font-size: 18px;
+    color: black;
+  }
+}

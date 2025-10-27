@@ -1,0 +1,76 @@
+/* =====================
+   Responsive Media Queries
+   ===================== */
+
+/* Tablets & small laptops (max-width: 992px) */
+@media (max-width: 992px) {
+  .formContainer {
+    /* max-width: 420px;
+    padding: 35px 25px; */
+  }
+
+  .formTitle {
+    font-size: 20px;
+  }
+
+  .formContainer button,
+  .googleBtn {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Mobile devices (max-width: 768px) */
+@media (max-width: 768px) {
+  body {
+    /* padding: 10px; */
+  }
+
+  .formContainer {
+    /* max-width: 100%;
+    padding: 30px 20px;
+    border-radius: 14px; */
+  }
+
+  .formTitle {
+    font-size: 18px;
+  }
+
+  .formContainer input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .googleBtn img {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Extra small screens (max-width: 480px) */
+@media (max-width: 480px) {
+  .formContainer {
+    /* padding: 25px 15px;
+      padding: 2rem 1rem;
+    border-radius: 12px; */
+      /* padding: 2rem 1.4rem; */
+  }
+
+  .formTitle {
+    font-size: 16px;
+  }
+
+  .formContainer button,
+  .googleBtn {
+    font-size: 13px;
+    padding: 9px;
+  }
+
+  .forgotPassword a {
+    font-size: 12px;
+  }
+
+  .formContainer p {
+    font-size: 13px;
+  }
+}

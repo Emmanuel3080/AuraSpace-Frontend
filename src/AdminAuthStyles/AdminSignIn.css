@@ -1,0 +1,174 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* linear-gradient(rgba(250, 204, 204, 0.6), rgba(23, 17, 17, 0.827)), */
+.signInPage {
+  background-image: url("../../public/HeroImg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signinContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* height: 80vh; */
+}
+
+.form {
+  border: 1px solid rgb(212, 209, 209);
+  padding: 2rem 1rem;
+  /* background: red; */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 500px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+
+  /* gap: 8px; */
+
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+  /* margin: 7rem 4rem; */
+  /* margin-top: 5rem;
+  margin-bottom: 5rem; */
+}
+.formHeads {
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  color: black;
+  font-size: clamp(1.1rem, calc(2vw + 1rem), 2rem);
+  letter-spacing: -1%;
+  line-height: 130%;
+  /* font-style: bold; */
+}
+
+.form label {
+  font-family: "Inter", sans-serif;
+  /* display: block; */
+  font-size: 16px;
+  /* font-weight: 600; */
+  color: black;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+.btnSignUp {
+  /* padding: 12px; */
+  padding: 1rem 2rem;
+  background: #1c66ad;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  letter-spacing: 0.002rem;
+  width: 100%;
+  transition: 0.3s ease;
+}
+.btnSignUp :hover {
+  background: #155080;
+}
+.forgotPasswordText {
+  text-decoration: none;
+  color: #000000b2;
+  font-size: 15px;
+  font-style: regular;
+  letter-spacing: 0%;
+  vertical-align: bottom;
+  line-height: 125%;
+  font-family: "Poppins", sans-serif;
+}
+/* Divider */
+.orDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+  color: #ddd;
+}
+
+.orDivider span {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.orDivider p {
+  margin: 0 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Google button */
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* gap: 8px; */
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.googleBtn img {
+  width: 18px;
+  height: 18px;
+}
+
+.googleBtn:hover {
+  background: #f2f2f2;
+}
+
+.acountNone {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 125%;
+  vertical-align: bottom;
+  letter-spacing: 0%;
+  font-style: regular;
+  color: #000000b2;
+}
+.signText {
+  color: #4285f4;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 125%;
+  text-decoration: none;
+  letter-spacing: 0%;
+  vertical-align: bottom;
+}
+
+.btnSubmits {
+  background: #4285f4;
+}
+.btnSubmits:disabled {
+  cursor: not-allowed;
+}

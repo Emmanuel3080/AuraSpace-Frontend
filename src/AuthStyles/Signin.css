@@ -1,0 +1,129 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* linear-gradient(rgba(250, 204, 204, 0.6), rgba(23, 17, 17, 0.827)), */
+.signInPage {
+  background: url("../../public/HeroImg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  /* padding: 30px; */
+  /* overflow: hidden; */
+}
+
+.signinContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  /* background-color: red; */
+  /* height: 90vh; */
+}
+
+.forms {
+  border: 1px solid rgb(212, 209, 209);
+  padding: 2rem 1rem;
+  /* background: red; */
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  /* gap: 4rem; */
+  gap: 15px;
+  width: 500px;
+  background: rgba(255, 255, 255, 0.15);
+  /* background-color: red; */
+  /* backdrop-filter: blur(10px); */
+
+  /* gap: 8px; */
+
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.25);
+  /* margin: 7rem 4rem; */
+  /* margin-top: 5rem;
+  margin-bottom: 5rem; */
+  /* border: 1px solid ; */
+}
+.greetSignIn {
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  /* font-weight: 700; */
+  color: black;
+  font-size: clamp(1.1rem, calc(2vw + 1rem), 2rem);
+  letter-spacing: -1%;
+  line-height: 130%;
+  font-style: bold;
+}
+
+.form label {
+  font-family: "Inter", sans-serif;
+  /* display: block; */
+  font-size: 16px;
+  /* font-weight: 600; */
+  color: black;
+}
+
+.formInput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+.btnSignUp {
+  /* padding: 12px; */
+  padding: 1rem 2rem;
+  background: #1c66ad;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  letter-spacing: 0.002rem;
+  width: 100%;
+  transition: 0.3s ease;
+}
+.btnSignUp :hover {
+  background: #155080;
+}
+.forgotPasswordTexts {
+  text-decoration: none;
+  color: #000000b2;
+  /* color:red ; */
+  font-size: 20px;
+  font-weight: 400;
+  font-style: regular;
+  letter-spacing: 0%;
+  vertical-align: bottom;
+  line-height: 125%;
+  font-family: "Poppins", sans-serif;
+}
+
+.acountNone {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 125%;
+  vertical-align: bottom;
+  letter-spacing: 0%;
+  font-style: regular;
+  color: #000000b2;
+}
+.signText {
+  color: #4285f4;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 125%;
+  text-decoration: none;
+  letter-spacing: 0%;
+  vertical-align: bottom;
+}

@@ -1,0 +1,71 @@
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+  /* Sidebar becomes a top bar or hidden */
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    top: 0;
+    padding: 10px;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .sidebar .sidebarContent {
+    min-width: 180px; /* horizontal scrollable items */
+    margin-right: 10px;
+  }
+
+  /* Main content takes full width */
+  .main-content {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .eventStatsContainer {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .eventLink {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .eventsLinks {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .eventTimeText {
+    font-size: 1.1rem;
+  }
+
+  .statValue {
+    font-size: 1.3rem;
+  }
+
+  .copyLInkIcon {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .sidebar .sidebarContent {
+    min-width: 140px;
+  }
+
+  .eventTimeText {
+    font-size: 1rem;
+  }
+
+  .statValue {
+    font-size: 1.2rem;
+  }
+
+  .eventsLinks a {
+    font-size: 0.85rem;
+  }
+}

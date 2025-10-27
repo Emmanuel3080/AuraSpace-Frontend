@@ -1,0 +1,92 @@
+/* 📱 Small Mobile screens (max-width: 480px) */
+@media screen and (max-width: 480px) {
+  .otpContainer {
+    padding: 15px;
+    height: auto;
+    min-height: 100vh;
+    text-align: center;
+  }
+
+  .otpContainer h1 {
+    font-size: 20px;
+  }
+
+  .otpContainer p {
+    font-size: 13px;
+  }
+
+  .otp-inp {
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap; /* allow wrapping if screen is too small */
+  }
+
+  .otp-inputs input {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .verify-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 14px;
+    width: 100%;
+    border-radius: 6px;
+  }
+
+  .resend-text {
+    font-size: 13px;
+  }
+
+  .resendPass {
+    font-size: 13px;
+  }
+}
+
+/* 📲 Tablets (481px – 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .otpContainer {
+    padding: 20px;
+    height: auto;
+  }
+
+  .otpContainer h1 {
+    font-size: 24px;
+  }
+
+  .otpContainer p {
+    font-size: 14px;
+  }
+
+  .otp-inp {
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .otp-inputs input {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+
+  .verify-btn {
+    padding: 1rem 2rem;
+    font-size: 15px;
+  }
+}
+
+/* 💻 Medium Laptops (769px – 1024px) */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .otpContainer {
+    padding: 25px;
+  }
+
+  .otp-inp {
+    gap: 10px;
+  }
+
+  .otp-inputs input {
+    width: 45px;
+    height: 45px;
+  }
+}

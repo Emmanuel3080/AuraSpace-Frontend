@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.header {
+  display: flex;
+  align-items: center;
+  /* background-color: red; */
+  justify-content: space-between;
+  padding: 3px 10px;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  width: 80%;
+}
+.navList {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+}
+.navList li .active {
+  text-decoration: none;
+}
+.profilePic {
+  border-radius: 10px;
+}

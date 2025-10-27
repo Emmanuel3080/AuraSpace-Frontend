@@ -1,0 +1,84 @@
+/* signInMedia.css */
+
+/* Tablet screens (up to 1024px) */
+@media (max-width: 1024px) {
+  .form {
+    width: 400px;
+    padding: 1.5rem;
+  }
+
+  .signInWelcome {
+    font-size: 26px;
+  }
+
+  .form label {
+    font-size: 15px;
+  }
+
+  .btnSignUp {
+    font-size: 14px;
+    padding: 0.9rem 1.5rem;
+  }
+}
+
+/* Mobile screens (up to 768px) */
+@media (max-width: 768px) {
+  .signinContainer {
+    height: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .form {
+    width: 90%;
+    padding: 1.2rem;
+  }
+
+  .signInWelcome {
+    font-size: 22px;
+  }
+
+  .form label {
+    font-size: 14px;
+  }
+
+  .btnSignUp {
+    font-size: 14px;
+    padding: 0.8rem 1.3rem;
+  }
+
+  .forgotPasswordText,
+  .acountNone {
+    font-size: 13px;
+    text-align: center;
+  }
+}
+
+/* Very small mobile screens (up to 480px) */
+@media (max-width: 480px) {
+  .form {
+    width: 100%;
+    padding: 1rem;
+    gap: 6px;
+  }
+
+  .signInWelcome {
+    font-size: 20px;
+  }
+
+  .btnSignUp {
+    font-size: 13px;
+    padding: 1rem;
+  }
+
+  .form input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .forgotPasswordText,
+  .acountNone,
+  .signText {
+    font-size: 12px;
+  }
+}

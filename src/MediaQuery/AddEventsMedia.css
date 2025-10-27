@@ -1,0 +1,75 @@
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+  .createEventsPage {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .uploadEventsOverview {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .uplodEventTimeDetails,
+  .uploadPriceDeatils {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .uploadDate_Time > div:nth-child(2) {
+    flex-direction: column; /* stack start/end time vertically */
+    gap: 15px;
+  }
+
+  .uploadDate_Time input[type="date"],
+  .uploadDate_Time input[type="time"] {
+    width: 100%;
+  }
+
+  .uploadEventsImage {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .imgPrev {
+    width: 100%;
+  }
+
+  .uploadField,
+  .descriptionField,
+  .selectInput,
+  .ticketInput,
+  .eventInput {
+    width: 100%; /* full width for inputs on mobile */
+  }
+
+  .eventOverviewText {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .eventTitleText {
+    font-size: 1.8rem;
+  }
+
+  .eventParaText {
+    font-size: 0.9rem;
+  }
+
+  .saveEvent {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .priceCont {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .NoOfTickets {
+    flex-direction: column;
+    width: 100%;
+  }
+}
