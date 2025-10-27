@@ -1,6 +1,6 @@
 export const BookTicket = async (eventId, quantity) => {
   try {
-    const response = await fetch(`http://localhost:4500/user/book/ticket`, {
+    const response = await fetch(`https://auraspace-backend.onrender.com/user/book/ticket`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
