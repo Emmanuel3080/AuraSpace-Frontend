@@ -69,13 +69,13 @@ function App() {
                 element={<ChangePasswordPage />}
               />
 
-              <Route path="/" element={<UserLandingPage />} />
 
               <Route path="/user/signup" element={<SignUp_Page />} />
               <Route path="/user/signin" element={<SignIn_Page />} />
 
               {/*user Protected Route */}
               <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<DashbaordPage />} />
                 <Route path="/user/dashboard" element={<DashbaordPage />} />
                 <Route path="/event/:eventId" element={<SingleEventsPage />} />
                 <Route path="/tickets/:bookingId" element={<MyTickets />} />
