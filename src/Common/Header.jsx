@@ -48,7 +48,7 @@ const Header = () => {
               href="/user/dashboard"
               className={`block hover:text-indigo-700 font-normal font-sans tracking-wide transition-colors duration-200 no-underline ${
                 menuOpen
-                  ? "text-black text-xl font-sans font-normal text-center"
+                  ? "text-black text-sm font-sans font-normal text-center"
                   : "text-black text-sm"
               }`}
               // style={{fontFamily:""}}
@@ -62,7 +62,7 @@ const Header = () => {
               href="/events"
               className={`block hover:text-indigo-700 font-normal font-sans tracking-wide transition-colors duration-200 no-underline ${
                 menuOpen
-                  ? "text-slate-900 text-xl font-sans font-normal text-center"
+                  ? "text-black text-sm font-sans font-normal text-center"
                   : "text-black text-sm"
               }`}
             >
@@ -75,7 +75,7 @@ const Header = () => {
               href="/tickets/:bookingId"
               className={`block hover:text-indigo-700 font-normal font-sans tracking-wide transition-colors duration-200 no-underline ${
                 menuOpen
-                  ? "text-slate-900 text-xl font-sans font-normal text-center"
+                  ? "text-black text-sm font-sans font-normal text-center"
                   : "text-black text-sm"
               }`}
             >
@@ -86,9 +86,9 @@ const Header = () => {
           <li>
             <a
               href="/about"
-              className={`block hover:text-indigo-700 font-normal font-sans tracking-wide transition-colors duration-200 no-underline ${
+               className={`block hover:text-indigo-700 font-normal font-sans tracking-wide transition-colors duration-200 no-underline ${
                 menuOpen
-                  ? "text-slate-900 text-xl font-sans font-normal text-center"
+                  ? "text-black text-sm font-sans font-normal text-center"
                   : "text-black text-sm"
               }`}
             >
@@ -99,9 +99,9 @@ const Header = () => {
           <li>
             <a
               href="/admin/signup"
-              className={`block hover:text-indigo-700 font-normal font-sans tracking-wide transition-colors duration-200 no-underline ${
+               className={`block hover:text-indigo-700 font-normal font-sans tracking-wide transition-colors duration-200 no-underline ${
                 menuOpen
-                  ? "text-slate-900 text-xl font-sans font-normal text-center"
+                  ? "text-black text-sm font-sans font-normal text-center"
                   : "text-black text-sm"
               }`}
             >
