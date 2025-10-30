@@ -83,7 +83,7 @@ const HeroSection = () => {
           responsive={responsive}
           infinite={true}
           autoPlay={true}
-          autoPlaySpeed={1000}
+          autoPlaySpeed={6000}
           showDots={false}
           arrows={false}
         >
