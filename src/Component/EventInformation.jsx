@@ -108,12 +108,11 @@ const EventInformation = ({
     setBookingTicket(true);
     try {
       const data = await BookTicket(event._id, quantityValue);
-      if (data.Status == "Success") {
+      if (data.success) {
         toast.success();
         console.log(data.bookEvent);
-        toast.success(`${data.Message}
-          Kindly check your mail for more Information`);
-
+        toast.success(`
+            Kindly check your mail for more Information`);
         // navigate(`/tickets/${data.bookEvent._id}`);
       } else {
         toast.error(data.Message);
