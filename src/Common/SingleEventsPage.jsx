@@ -42,7 +42,7 @@ const SingleEventsPage = () => {
   useEffect(() => {
     getSingleEvents(eventId);
   }, []);
-  console.log(adminSingleEvent);
+  // console.log(adminSingleEvent);
 
   return (
     <div>
@@ -66,6 +66,8 @@ const SingleEventsPage = () => {
         organizerName={adminSingleEvent?.createdBy?.OrganizerName}
         organizerPicture={adminSingleEvent?.createdBy?.AdminProfileImg}
         organizerContact={adminSingleEvent?.createdBy?.PhoneNumber}
+        eventDate={adminSingleEvent?.startTime}
+        eventName={adminSingleEvent?.title}
         NumberOfTickets={
           adminSingleEvent?.TicketsAvailable > adminSingleEvent?.Attendees ? (
             <div

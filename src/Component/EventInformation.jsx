@@ -109,8 +109,8 @@ const EventInformation = ({
     try {
       const data = await BookTicket(event._id, quantityValue);
       if (data.success) {
-        toast.success();
-        console.log(data.bookEvent);
+        // toast.success();
+        // console.log(data.bookEvent);
         toast.success(`
             Kindly check your mail for more Information`);
         // navigate(`/tickets/${data.bookEvent._id}`);
@@ -315,7 +315,6 @@ const EventInformation = ({
           {/* Date */}
           <p className="text-xl text-gray-500 font-normal ">{formattedDate}</p>
 
-          <p className="w-[2px] h-5 bg-gray-400 rounded-sm"></p>
 
           <div className="flex items-center gap-1 text-xl font-normal  font-sans text-gray-500">
             <p>{formattedTime}</p>
@@ -349,6 +348,8 @@ const EventInformation = ({
         organizerName={organizerName}
         organizerContact={organizerContact}
         organizerPicture={organizerPicture}
+        eventName={eventTitle}
+        eventDate={formattedDate}
       />
     </div>
   );

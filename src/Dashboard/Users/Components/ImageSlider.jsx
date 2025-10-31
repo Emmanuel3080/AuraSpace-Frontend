@@ -54,7 +54,7 @@ const ImageSlider = () => {
             variants={boxContainer}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.4}}
+            viewport={{ once: true, amount: 0.4 }}
             whileHover={{ scale: 1.03, y: -2 }}
             transition={{ type: "spring", stiffness: 200 }}
           >
@@ -63,12 +63,45 @@ const ImageSlider = () => {
               eventId={eve._id}
               image={eve.coverImage}
               location={eve.location}
-              formattedDate={new Date(eve.eventDate).toLocaleDateString("en-US", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              })}
-              formmattedTime={eve.startTime}
+              formattedDate={
+                new Date(eve?.eventDate).getTime() < Date.now() ? (
+                  <div
+                    style={{
+                      background: "#fee2e2",
+                      padding: "10px 16px",
+                      borderRadius: "8px",
+                      color: "#b91c1c",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      textAlign: "center",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "fit-content",
+                      boxShadow: "0 3px 8px rgba(185,28,28,0.15)",
+                    }}
+                  >
+                    Event Closed
+                  </div>
+                ) : (
+                  new Date(eve?.eventDate).toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })
+                )
+              }
+              formmattedTime={
+                new Date(eve?.eventDate).getTime() < Date.now()
+                  ? null
+                  : new Date(`1970-01-01T${eve?.startTime}`).toLocaleTimeString(
+                      "en-US",
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )
+              }
             />
           </motion.div>
         ))}

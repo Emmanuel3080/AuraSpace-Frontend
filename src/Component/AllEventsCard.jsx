@@ -10,7 +10,7 @@ const AllEventsCard = ({
   formmattedTime,
 }) => {
   const formatTime = (time) => {
-    if (!time) return "Invalid Time";
+    if (!time) return "oooooo";
     const [hrs, minute] = time.split(":");
     const date = new Date();
     date.setHours(hrs);
@@ -49,7 +49,7 @@ const AllEventsCard = ({
           {title}
         </h2>
         <p className="text-sm text-gray-500">
-          {formattedDate}. <span className="text-right"> {dateFormat}</span>
+          {formattedDate}<span className="text-right"> {formmattedTime || ""}</span>
         </p>
 
         {/* <div className="pt-2">

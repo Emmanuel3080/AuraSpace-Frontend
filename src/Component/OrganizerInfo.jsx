@@ -4,6 +4,8 @@ const OrganizerInfo = ({
   organizerName,
   organizerPicture,
   organizerContact,
+  eventName,
+  eventDate,
 }) => {
   return (
     <div className="my-10">
@@ -33,7 +35,7 @@ const OrganizerInfo = ({
               <i className="fa fa-phone"></i>
               {organizerContact ? (
                 <a
-                  href={`https://wa.me/${organizerContact}`}
+                  href={`https://wa.me/${organizerContact}?text=Hello%20${organizerName},%20I'm%20interested%20in%20the%20event%20${eventName}%20scheduled%20for%20${eventDate}.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-300 no-underline "
