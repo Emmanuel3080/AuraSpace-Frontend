@@ -68,7 +68,7 @@ const Footer = () => {
             <div className="flex items-center gap-1">
               <i className="fa-solid fa-envelope text-indigo-400 "></i>
               <a
-                href="mailto:support@auraspace.com"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=emmanuelabiodun041@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="no-underline text-white"
