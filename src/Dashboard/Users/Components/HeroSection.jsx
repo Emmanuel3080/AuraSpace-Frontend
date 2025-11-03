@@ -130,16 +130,47 @@ const HeroSection = () => {
                       <span className="font-semibold text-indigo-500">
                         Date:
                       </span>
-                      {eve.eventDate || "TBA"}
+                      {new Date(eve?.eventDate).getTime() < Date.now() ? (
+                        <div
+                          style={{
+                            background: "#fee2e2",
+                            padding: "10px 16px",
+                            borderRadius: "8px",
+                            color: "#b91c1c",
+                            fontWeight: "600",
+                            fontSize: "14px",
+                            textAlign: "center",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "fit-content",
+                            boxShadow: "0 3px 8px rgba(185,28,28,0.15)",
+                          }}
+                        >
+                          Event Closed
+                        </div>
+                      ) : (
+                        new Date(eve?.eventDate).toLocaleDateString("en-US", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        }) || "TBA"
+                      )}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
                     {/* <i className="fa fa-calendar text-indigo-400"></i> */}
                     <p className="text-sm md:text-base font-bold font-inter text-gray-800">
-                      <span className="font-semibold text-indigo-500">
-                        Price from:
-                      </span>
-                      {eve.price.toLocaleString() || "0"}.00
+                      {new Date(eve?.eventDate).getTime() < Date.now() ? (
+                        null
+                      ) : (
+                        <div>
+                          <span className="font-semibold text-indigo-500">
+                            Price from:
+                          </span>
+                          #{eve?.price.toLocaleString() || "0"}
+                        </div>
+                      )}
                     </p>
                   </div>
                 </div>
