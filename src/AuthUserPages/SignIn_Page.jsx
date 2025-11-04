@@ -53,7 +53,7 @@ const SignIn_Page = () => {
     <div className="signInPage">
       <div className="signinContainer">
         <form
-          className="forms"
+          className="form"
           onSubmit={handleSubmit(handleUserData, handelError)}
         >
           <h1 className="greetSignIn">Hi, Welcome Back!</h1>
@@ -99,6 +99,17 @@ const SignIn_Page = () => {
               </span>
             </div>
           </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              paddingTop: "1px",
+            }}
+          >
+            <a href="/forgot/password" className="text-xl font-sans no-underline text-slate-800 font-normal">
+              Forgot Password?
+            </a>
+          </div>
 
           <div
             style={{
@@ -130,17 +141,7 @@ const SignIn_Page = () => {
               )}
             </button>
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              paddingTop: "10px",
-            }}
-          >
-            <a href="/forgot/password" className="forgotPasswordTexts">
-              Forgot Password?
-            </a>
-          </div>
+
           {/* <div className="orDivider">
             <span></span>
             <p>or</p>

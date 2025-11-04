@@ -7,6 +7,7 @@ import Header from "../Common/Header";
 import SingleEventImage from "../Component/SingleEventImage";
 import EventInformation from "../Component/EventInformation";
 import LocationMaop from "../Component/LocationMaop";
+import EventExpiredCard from "../Component/EventExpiredCard";
 const SingleEventsPage = () => {
   const { getSingleEvents, adminSingleEvent } = useContext(adminAuthContext);
 
@@ -42,7 +43,23 @@ const SingleEventsPage = () => {
   useEffect(() => {
     getSingleEvents(eventId);
   }, []);
+
+  if (!adminSingleEvent) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-gray-500">
+        Loading event details...
+      </div>
+    );
+  }
+
   // console.log(adminSingleEvent);
+  const hasEventExpired = adminSingleEvent?.eventDate
+    ? new Date(adminSingleEvent?.eventDate).getTime() < Date.now()
+    : false;
+
+  if (hasEventExpired) {
+    return <EventExpiredCard />;
+  }
 
   return (
     <div>

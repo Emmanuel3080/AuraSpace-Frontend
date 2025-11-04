@@ -25,11 +25,11 @@ const AdminSettings = () => {
         email: userInfo.email,
         accountNumber: userInfo.accountNumber,
         bankAccount: userInfo.bankAccount,
+        PhoneNumber: userInfo.PhoneNumber,
       });
     }
   }, [reset, userInfo]);
   console.log(userInfo);
-  
 
   const updateAdminInfo = async (formData) => {
     setUpdatingInfo(true);
@@ -46,18 +46,18 @@ const AdminSettings = () => {
           body: JSON.stringify(formData),
         }
       );
-      
-      const data = await response.json();   
+
+      const data = await response.json();
       console.log(data);
       if (data.Status == "Success") {
-          toast.success("Updated Succesfully");
-        } else {
-            toast.error("Update Failed");
-        }
+        toast.success("Updated Succesfully");
+      } else {
+        toast.error("Update Failed");
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     } finally {
-        setUpdatingInfo(false);
+      setUpdatingInfo(false);
     }
     console.log(formData);
   };
@@ -110,6 +110,15 @@ const AdminSettings = () => {
                 placeholder="Enter account number"
               />
             </div>
+            <div>
+              <label className="block text-gray-700">Phone Number Number</label>
+              <input
+                type="text"
+                {...register("PhoneNumber")}
+                className="w-full border p-2 rounded mt-1"
+                placeholder="Enter Phone Number"
+              />
+            </div>
 
             {/* Bank Account */}
             <div>
@@ -129,7 +138,12 @@ const AdminSettings = () => {
             <div className="md:col-span-2">
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
+                disabled={updateInfo}
+                className={`w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition ${
+                  updateInfo
+                    ? "bg-blue-400 cursor-not-allowed"
+                    : "bg-blue-500 hover:bg-blue-600"
+                }`}
               >
                 {updateInfo ? (
                   <div
@@ -140,7 +154,7 @@ const AdminSettings = () => {
                       gap: "4px",
                     }}
                   >
-                    Updating{" "}
+                    Updating
                     <span
                       className="spinner-border spinner-border-sm me-2 "
                       role="status"
