@@ -1,35 +1,28 @@
 import React, { useContext, useEffect, useState } from "react";
 import AdminCreatEventHeader from "../../Common/AdminCreatEventHeader";
 import { adminAuthContext } from "../../Context/adminAuthContext";
-import { href, useParams } from "react-router-dom";
+import { href, useNavigate, useParams } from "react-router-dom";
 
 import { Link } from "react-router-dom";
+
+import Modal from "react-modal";
 
 import "../../AdminStyles/AdminEvents.css";
 
 import "../../MediaQuery/AdminEventsPage.css";
-
-const orders = [
-  {
-    id: 1,
-    name: "Asake Concert",
-    quantity: 2,
-    date: "2025-10-02",
-    price: "$0",
-  },
-  {
-    id: 2,
-    name: "World Cup Final",
-    quantity: 1,
-    date: "2025-10-02",
-    price: "$100",
-  },
-];
+Modal.setAppElement("#root");
 
 const AdminEventsPage = () => {
-  const { getAdminEvents, adminEvents } = useContext(adminAuthContext);
+  const {
+    getAdminEvents,
+    adminEvents,
+    getUserBookings,
+    userBookingInfo,
+    numberOfBookedTicket,
+  } = useContext(adminAuthContext);
 
   const [selectedEvents, setselectedEvents] = useState(null);
+  const [modalOpen, setOpen] = useState(false);
 
   const { eventId } = useParams();
 
@@ -39,6 +32,23 @@ const AdminEventsPage = () => {
   // useEffect(() => {
   //   getAdminEvents(managerId);
   // }, [managerId]);
+  let subtitle;
+
+  const { id } = useParams;
+  const navigate = useNavigate();
+
+  function openModal() {
+    setOpen(true);
+    // setLoading(true)
+  }
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setOpen(false);
+  }
 
   useEffect(() => {
     if (eventsAvailable.length > 0 && !selectedEvents) {
@@ -67,9 +77,142 @@ const AdminEventsPage = () => {
   }, [userInfo]);
   console.log(eventsAvailable);
 
+  useEffect(() => {
+    if (selectedEvents?._id) {
+      getUserBookings(selectedEvents?._id);
+    }
+  }, [selectedEvents]);
+
   return (
     <div>
       <AdminCreatEventHeader />
+
+      <div>
+        <Modal
+          isOpen={modalOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: 1000,
+              backdropFilter: "blur(4px)",
+            },
+            content: {
+              top: "60%",
+              left: "50%",
+              right: "auto",
+              bottom: "auto",
+              marginRight: "-50%",
+              transform: "translate(-50%, -50%)",
+              borderRadius: "16px",
+              padding: "1.8rem 1.5rem",
+              width: "95%",
+              maxWidth: "880px",
+              border: "none",
+              backgroundColor: "#ffffff",
+              boxShadow: "0 10px 35px rgba(0,0,0,0.15)",
+              transition: "all 0.3s ease-in-out",
+              overflow: "hidden",
+            },
+          }}
+          contentLabel="User Bookings"
+        >
+          <div className="border-b border-gray-100 pb-3 mb-5">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl md:text-2xl font-semibold text-gray-800">
+                <span className="text-blue-600">{selectedEvents?.title}</span>
+              </h2>
+              <a
+                onClick={closeModal}
+                className="text-gray-400 hover:text-gray-600 text-2xl font-bold cursor-pointer focus:outline-none transition-all duration-200 no-underline"
+              >
+                &times;
+              </a>
+            </div>
+
+            {/* Booking Info Table */}
+            <div className="overflow-x-auto rounded-xl border border-gray-200 shadow-md bg-white">
+              <table className="w-full min-w-[800px] text-sm text-left text-gray-600">
+                <thead className="bg-gradient-to-r from-blue-50 to-blue-100 text-gray-700 uppercase text-xs font-semibold tracking-wider">
+                  <tr>
+                    <th className="px-2 py-3">Name</th>
+                    <th className="px-2 py-3">Email</th>
+                    <th className="px-2 py-3 text-center">Total Bookings</th>
+                    <th className="px-2 py-3 text-center">Event Price</th>
+                    <th className="px-2 py-3 text-center">Quantity</th>
+                    <th className="px-2 py-3 text-center">Amount Paid</th>
+                    <th className="px-2 py-3 text-center">Paid At</th>
+                  </tr>
+                </thead>
+
+                <tbody className="divide-y divide-gray-100">
+                  {userBookingInfo.length > 0 ? (
+                    userBookingInfo.map((user, index) => (
+                      <tr
+                        key={index}
+                        className={`hover:bg-blue-50 transition-all duration-150 ${
+                          index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                        }`}
+                      >
+                        <td className="px-3 py-3 font-medium truncate  text-gray-800  max-w-[150px]">
+                          {user?.name}
+                        </td>
+                        <td className="px-3 py-3 text-gray-700  max-w-[180px]">
+                          {user?.email}
+                        </td>
+                        <td className="px-3 py-3  text-center font-bold text-2xl text-gray-900">
+                          {user?.totalBookings}
+                        </td>
+                        <td className="px-3 py-3 text-center text-gray-800">
+                          ₦{user?.EventPrice?.toLocaleString()}
+                        </td>
+                        <td className="px-3 py-3 text-center text-gray-800">
+                          {user?.Quantity}
+                        </td>
+                        <td className="px-3 py-3 text-center font-semibold text-blue-600">
+                          ₦{user?.TotalAmountPaid?.toLocaleString()}
+                        </td>
+                        <td className="px-3 py-3 text-center text-gray-700">
+                          {new Date(user?.dateCreated).toLocaleDateString(
+                            [],
+                            "en-US",
+                            {
+                              weekday: "short",
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            }
+                          )}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td
+                        colSpan="7"
+                        className="px-6 py-5 text-center text-gray-500 italic bg-gray-50"
+                      >
+                        No booking information available
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Total Number of Booked Tickets */}
+            <div className="mt-4 text-right">
+              <p className="text-sm md:text-base text-gray-600">
+                Total Tickets Booked:{" "}
+                <span className="font-semibold text-gray-800">
+                  {numberOfBookedTicket}
+                </span>
+              </p>
+            </div>
+          </div>
+        </Modal>
+      </div>
 
       {/* <button>Go to Dashboard</button> */}
 
@@ -115,7 +258,7 @@ const AdminEventsPage = () => {
               <h1
                 className="
           text-sm md:text-base font-semibold text-gray-900 
-          mt-2 text-center md:text-left truncate w-full
+          mt-2 text-center md:text-left  w-full
         "
               >
                 {eve.title}
@@ -124,9 +267,7 @@ const AdminEventsPage = () => {
               {/* Event Location */}
               <p className="flex items-center gap-1 text-gray-600 text-xs md:text-sm font-medium mt-1">
                 <i className="fa fa-location-arrow text-blue-500 text-xs md:text-sm"></i>
-                <span className="truncate">
-                  {eve.location || "No location"}
-                </span>
+                <span className="">{eve.location || "No location"}</span>
               </p>
             </div>
           ))}
@@ -357,8 +498,15 @@ const AdminEventsPage = () => {
                         </button>
                       </Link>
 
-                      <button className="flex-1 bg-red-500 text-white text-sm px-4 py-2 rounded hover:bg-red-600">
+                      {/* <button className="flex-1 bg-red-500 text-white text-sm px-4 py-2 rounded hover:bg-red-600">
                         Delete Event
+                      </button> */}
+
+                      <button
+                        className="flex-1 bg-red-500 text-white text-sm px-4 py-2 rounded hover:bg-red-600"
+                        onClick={openModal}
+                      >
+                        View User Bookings
                       </button>
                     </div>
                   </div>

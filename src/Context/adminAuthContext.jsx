@@ -15,6 +15,8 @@ const AdminProvider = ({ children }) => {
   const [submitEventForm, setSubmittingEventForm] = useState(false);
   const [adminSingleEvent, setAdminSingleEvents] = useState({});
   const [adminEvents, setAdminEvents] = useState([]);
+  const [userBookingInfo, setUserBookingInfo] = useState([]);
+  const [numberOfBookedTicket, setBookedTicket] = useState(0);
   const navigate = useNavigate();
   const [updateEventData, setUpdatingEvent] = useState(false);
   const adminSignUp = async (adminData) => {
@@ -237,6 +239,32 @@ const AdminProvider = ({ children }) => {
 
   //   }
   // }
+
+  const getUserBookings = async (id) => {
+    try {
+      const bookings = await fetch(
+        `${baseUrl}/admin/bookings/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("AdminAccessToken")}`,
+          },
+        }
+      );
+
+      const data = await bookings.json();
+      console.log(data);
+      if (data.Status == "Success") {
+        console.log(data);
+        setUserBookingInfo(data.userBookingCount);
+        setBookedTicket(data.No_of_Bookings);
+      } else {
+        toast.error("Booking Not Found");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const authValue = {
     // greet,
     adminSignUp,
@@ -255,6 +283,9 @@ const AdminProvider = ({ children }) => {
     adminSingleEvent,
     updateEventData,
     adminLogout,
+    getUserBookings,
+    userBookingInfo,
+    numberOfBookedTicket
   };
 
   return (
