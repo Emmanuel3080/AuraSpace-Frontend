@@ -136,9 +136,11 @@ const AdminEventsPage = () => {
               <table className="w-full min-w-[800px] text-sm text-left text-gray-600">
                 <thead className="bg-gradient-to-r from-blue-50 to-blue-100 text-gray-700 uppercase text-xs font-semibold tracking-wider">
                   <tr>
-                    <th className="px-2 py-3">Name</th>
+                    <th className="px-2 py-3">S/N</th>
+                    <th className="px-2 py-3">Name</th>{" "}
                     <th className="px-2 py-3">Email</th>
                     <th className="px-2 py-3 text-center">Total Bookings</th>
+                    <th className="px-2 py-3 text-center">BookingId</th>
                     <th className="px-2 py-3 text-center">Event Price</th>
                     <th className="px-2 py-3 text-center">Quantity</th>
                     <th className="px-2 py-3 text-center">Amount Paid</th>
@@ -155,6 +157,7 @@ const AdminEventsPage = () => {
                           index % 2 === 0 ? "bg-white" : "bg-gray-50"
                         }`}
                       >
+                        <td className="px-3 py-3 font-medium truncate  text-gray-800  max-w-[150px]">{index+1}</td>
                         <td className="px-3 py-3 font-medium truncate  text-gray-800  max-w-[150px]">
                           {user?.name}
                         </td>
@@ -163,6 +166,9 @@ const AdminEventsPage = () => {
                         </td>
                         <td className="px-3 py-3  text-center font-bold text-2xl text-gray-900">
                           {user?.totalBookings}
+                        </td>
+                        <td className="px-3 py-3  text-center  text-sm text-gray-900">
+                          {user?.BookingId}
                         </td>
                         <td className="px-3 py-3 text-center text-gray-800">
                           ₦{user?.EventPrice?.toLocaleString()}
@@ -202,7 +208,7 @@ const AdminEventsPage = () => {
             </div>
 
             {/* Total Number of Booked Tickets */}
-            <div className="mt-4 text-right">
+            <div className=" text-right">
               <p className="text-sm md:text-base text-gray-600">
                 Total Tickets Booked:{" "}
                 <span className="font-semibold text-gray-800">
