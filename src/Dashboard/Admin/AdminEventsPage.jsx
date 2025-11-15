@@ -75,7 +75,7 @@ const AdminEventsPage = () => {
 
     if (userInfo?._id) getAdminEvents();
   }, [userInfo]);
-  console.log(eventsAvailable);
+  // console.log(eventsAvailable);
 
   useEffect(() => {
     if (selectedEvents?._id) {
@@ -157,7 +157,9 @@ const AdminEventsPage = () => {
                           index % 2 === 0 ? "bg-white" : "bg-gray-50"
                         }`}
                       >
-                        <td className="px-3 py-3 font-medium truncate  text-gray-800  max-w-[150px]">{index+1}</td>
+                        <td className="px-3 py-3 font-medium truncate  text-gray-800  max-w-[150px]">
+                          {index + 1}
+                        </td>
                         <td className="px-3 py-3 font-medium truncate  text-gray-800  max-w-[150px]">
                           {user?.name}
                         </td>
@@ -357,7 +359,18 @@ const AdminEventsPage = () => {
                     </p>
                     <p className="text-blue-900 text-xl">
                       {selectedEvents?.TicketsSold || 0}/
+                      {selectedEvents?.TicketsSold +
+                        selectedEvents?.TicketsAvailable || 0}
+                    </p>
+                  </div>
+                  <div className="eventStat">
+                    <p className="text-xl text-gray-600 font-normal">
+                      Remaining Tickets
+                    </p>
+                    <p className="text-blue-900 text-xl">
                       {selectedEvents?.TicketsAvailable || 0}
+                      {/* {selectedEvents?.TicketsSold || 0} */}
+                      {/* {selectedEvents?.TicketsAvailable || 0} */}
                     </p>
                   </div>
 
@@ -407,7 +420,8 @@ const AdminEventsPage = () => {
                           <td className="px-4 py-2 text-gray-700">
                             {" "}
                             {selectedEvents?.TicketsSold || 0}/
-                            {selectedEvents?.TicketsAvailable || 0}
+                            {selectedEvents?.TicketsSold +
+                              selectedEvents?.TicketsAvailable || 0}
                           </td>
                           <td className="px-4 py-2 text-gray-700">
                             #{selectedEvents.price}.00
