@@ -18,7 +18,7 @@ const userSchema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
     .string()
-    .required("Password Required")
+    .required("Password Req uired")
     .min(6, "Minimum of be Six Characters")
     .matches(/[a-z]/, "Password must contain lowercase Letter"),
 });
