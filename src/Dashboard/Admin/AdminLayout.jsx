@@ -9,7 +9,7 @@ import {
   UsersIcon,
   SettingsIcon,
   LogOutIcon,
-  MenuIcon,
+  MenuIcon,       
   XIcon,
   SparklesIcon,
   TicketIcon,
