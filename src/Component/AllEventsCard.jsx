@@ -34,12 +34,15 @@ const AllEventsCard = ({
         />
 
         {/* Location badge */}
-       <div className="absolute bottom-0 left-0 bg-white/15  
-         backdrop-blur-sm px-1 py-0 rounded-md shadow-md border border-white/10 w-fit">
-  <span className="text-sm text-black font-sans font-normal tracking-wide">
-    {location}
-  </span>
-</div>
+        <div className="absolute bottom-2 left-2 bg-[#111827]/70 backdrop-blur-md px-2.5 py-1 rounded-full shadow-md border border-white/10 w-fit flex items-center gap-1.5">
+          <svg className="w-3.5 h-3.5 text-[#8065E8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span className="text-xs text-white font-medium tracking-wide truncate max-w-[200px]">
+            {location || "Location not specified"}
+          </span>
+        </div>
 
       </div>
 

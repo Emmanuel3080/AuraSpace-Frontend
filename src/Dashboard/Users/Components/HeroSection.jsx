@@ -1,185 +1,231 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { authContext } from "../../../Context/userContext";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-
 import { motion } from "framer-motion";
-const responsive = {
-  desktop: { breakpoint: { max: 3000, min: 1024 }, items: 1, slidesToSlide: 1 },
-  tablet: { breakpoint: { max: 1024, min: 464 }, items: 1, slidesToSlide: 1 },
-  mobile: { breakpoint: { max: 464, min: 0 }, items: 1, slidesToSlide: 1 },
-};
+import {
+  SearchIcon,
+  MapPinIcon,
+  CalendarIcon,
+  TagIcon,
+  ArrowRightIcon,
+  SparklesIcon,
+  TicketIcon,
+} from "../../../Common/Icons";
+
+const CATEGORIES = [
+  "All",
+  "Music",
+  "Technology",
+  "Business",
+  "Education",
+  "Sports",
+  "Entertainment",
+  "Lifestyle",
+  "Arts",
+];
 
 const HeroSection = () => {
-  const { displayEvents, showEvents } = useContext(authContext);
+  const { showEvents } = useContext(authContext);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const displayUserEvnts = async () => {
-      try {
-        await displayEvents();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    displayUserEvnts();
-  }, []);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // if (!showEvents.length) return null;
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (searchQuery.trim()) params.append("q", searchQuery.trim());
+    if (selectedLocation.trim()) params.append("location", selectedLocation.trim());
+    if (selectedCategory && selectedCategory !== "All") params.append("category", selectedCategory);
+    navigate(`/events?${params.toString()}`);
+  };
+
+  const featuredEvent =
+    Array.isArray(showEvents) && showEvents.length > 0 ? showEvents[0] : null;
 
   return (
-    <div
-      className="flex flex-col md:flex-row items-center justify-between px-4 py-5 space-y-6 md:space-y-0 md:space-x-6 
-                bg-gradient-to-t from-slate-300 via-violet-400 to-blue-200 text-white rounded-b-2xl"
-    >
-      <motion.div
-        initial={{ opacity: 0, x: 100 }}
-        viewport={{ once: true }}
-        animate={{ opacity: 1, y: 0, x: 0 }}
-        transition={{ duration: 0.8 }}
-        className="md:w-1/2 flex flex-col justify-center px-2 md:px-0"
-      >
-        <h1
-          className="text-xl md:text-4xl font-bold font-sans mb-4 text-black "
-          style={{ textShadow: "2px 2px 6px rgba(0, 0, 0, 0.5)" }}
-        >
-          Experience <span className="text-pink-950">Moments Like</span> <br />
-          Never Before with AuraSpace
-        </h1>
-        <p className="text-base md:text-lg mb-6 max-w-full md:max-w-lg leading-relaxed text-black font-normal font-sans  ">
-          Effortlessly book your next unforgettable live experience with Aura
-          Space Tickets. Explore a curated selection of electrifying concerts,
-          thrilling sports events, and captivating performances—all at your
-          fingertips.
-        </p>
+    <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-[#F7F6F2]">
+      {/* Background subtle ambient glows */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-[#8065E8]/10 via-[#F45B69]/10 to-transparent blur-3xl rounded-full pointer-events-none" />
 
-        <div className="flex flex-col md:flex-row gap-4 mt-3 justify-center md:justify-start items-center w-full">
-          <a
-            href="/admin/signup"
-            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold 
-               px-5 py-3 rounded-lg shadow-md transition-all duration-500 bg-[length:200%_200%] 
-               hover:bg-right-bottom no-underline w-full md:w-auto text-center"
-          >
-            Create Events
-          </a>
-
-          <a
-            href="/events"
-            className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white font-semibold 
-               px-5 py-3 rounded-lg shadow-md transition-all duration-500 bg-[length:200%_200%] 
-               hover:bg-right-bottom no-underline w-full md:w-auto text-center"
-          >
-            Discover Events
-          </a>
-        </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full md:w-1/2 backdrop-brightness-80"
-      >
-        <Carousel
-          responsive={responsive}
-          infinite={true}
-          autoPlay={true}
-          autoPlaySpeed={6000}
-          showDots={false}
-          arrows={false}
-        >
-          {showEvents.map((eve, index) => (
-            <a
-              href={`/event/${eve._id}`}
-              key={index}
-              className="w-full p-4 flex flex-col items-center justify-center rounded-lg shadow-lg bg-white/10 backdrop-blur-md hover:scale-[1.02] transition-transform duration-300 no-underline text-white"
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* Left Column: Headline & Search */}
+          <div className="lg:col-span-7 space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="space-y-4"
             >
-              {/* Event Image */}
-              <img
-                src={eve.coverImage}
-                alt={eve.title}
-                className="w-full md:w-3/4 h-56 md:h-80 object-cover rounded-lg mb-4"
-              />
 
-              {/* Event Info */}
 
-              <div className="flex flex-col items-center justify-start w-full p-2">
-                {/* Event Title */}
-                <div className="text-left w-full">
-                  <h3 className="text-lg md:text-3xl font-bold mb-2 font-sans text-gray-900">
-                    {eve.title}
-                  </h3>
-                </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#111827] leading-[1.1] tracking-tight">
+                Find your next{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8065E8] via-[#F45B69] to-[#8065E8]">
+                  unforgettable
+                </span>{" "}
+                experience.
+              </h1>
 
-                <div className="w-full h-[2px] bg-white my-2 rounded-full"></div>
+              <p className="text-lg sm:text-xl text-[#737783] max-w-xl font-normal leading-relaxed">
+                Discover events, connect with people and experience something extraordinary. Curated experiences and instant ticketing right at your fingertips.
+              </p>
+            </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 w-full items-center bg-white/10 backdrop-blur-xl p-2 rounded-2xl shadow-md ">
-                  <div className="flex items-center gap-2">
-                    {/* <i className="fa fa-location-arrow text-indigo-400"></i> */}
-                    <p className="text-sm md:text-base font-normal  font-inter text-gray-800">
-                      <span className="font-semibold font-sans text-indigo-500">
-                        Location:
-                      </span>
-                      {eve.location || "TBA"}
-                    </p>
-                  </div>
-
-                  {/* Date */}
-                  <div className="flex items-center gap-2">
-                    {/* <i className="fa fa-calendar text-indigo-400"></i> */}
-                    <p className="text-sm md:text-base font-bold font-inter text-gray-800">
-                      <span className="font-semibold text-indigo-500">
-                        Date:
-                      </span>
-                      {new Date(eve?.eventDate).getTime() < Date.now() ? (
-                        <div
-                          style={{
-                            background: "#fee2e2",
-                            padding: "10px 16px",
-                            borderRadius: "8px",
-                            color: "#b91c1c",
-                            fontWeight: "600",
-                            fontSize: "14px",
-                            textAlign: "center",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            width: "fit-content",
-                            boxShadow: "0 3px 8px rgba(185,28,28,0.15)",
-                          }}
-                        >
-                          Event Closed
-                        </div>
-                      ) : (
-                        new Date(eve?.eventDate).toLocaleDateString("en-US", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        }) || "TBA"
-                      )}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {/* <i className="fa fa-calendar text-indigo-400"></i> */}
-                    <p className="text-sm md:text-base font-bold font-inter text-gray-800">
-                      {new Date(eve?.eventDate).getTime() < Date.now() ? (
-                        null
-                      ) : (
-                        <div>
-                          <span className="font-semibold text-indigo-500">
-                            Price from:
-                          </span>
-                          #{eve?.price.toLocaleString() || "0"}
-                        </div>
-                      )}
-                    </p>
-                  </div>
-                </div>
+            {/* Unified Search Filter Console (Luma / DICE style) */}
+            <motion.form
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              onSubmit={handleSearchSubmit}
+              className="bg-white p-3 sm:p-4 rounded-3xl shadow-xl shadow-[#111827]/5 border border-[#E9E9E7] space-y-3 sm:space-y-0 sm:flex sm:items-center sm:gap-2"
+            >
+              {/* Event Keyword Input */}
+              <div className="flex-1 flex items-center gap-3 px-3 py-2 bg-[#F7F6F2] rounded-2xl border border-transparent focus-within:border-[#8065E8] transition-colors">
+                <SearchIcon className="w-5 h-5 text-[#737783] flex-shrink-0" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Concert, conference, workshop..."
+                  className="w-full bg-transparent border-0 outline-none text-sm text-[#111827] placeholder-[#737783] font-medium"
+                />
               </div>
-            </a>
-          ))}
-        </Carousel>
-      </motion.div>
-    </div>
+
+              {/* Location Input */}
+              <div className="flex-1 flex items-center gap-3 px-3 py-2 bg-[#F7F6F2] rounded-2xl border border-transparent focus-within:border-[#8065E8] transition-colors">
+                <MapPinIcon className="w-5 h-5 text-[#737783] flex-shrink-0" />
+                <input
+                  type="text"
+                  value={selectedLocation}
+                  onChange={(e) => setSelectedLocation(e.target.value)}
+                  placeholder="City, venue, or online"
+                  className="w-full bg-transparent border-0 outline-none text-sm text-[#111827] placeholder-[#737783] font-medium"
+                />
+              </div>
+
+              {/* Submit CTA Button */}
+              <button
+                type="submit"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#111827] hover:bg-[#8065E8] text-white px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg flex-shrink-0 border-0 cursor-pointer"
+              >
+                <span>Discover</span>
+                <ArrowRightIcon className="w-4 h-4" />
+              </button>
+            </motion.form>
+
+            {/* Quick Filter Categories */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="flex items-center gap-2 flex-wrap"
+            >
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#737783]">
+                Popular:
+              </span>
+              {["Music", "Technology", "Business", "Entertainment"].map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => navigate(`/events?category=${cat}`)}
+                  className="text-xs font-medium px-3 py-1.5 rounded-full bg-white border border-[#E9E9E7] text-[#111827] hover:border-[#8065E8] hover:text-[#8065E8] transition-colors cursor-pointer"
+                >
+                  {cat}
+                </button>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right Column: Featured Event Card (DICE-inspired aesthetic) */}
+          <div className="lg:col-span-5">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="relative group"
+            >
+              {featuredEvent ? (
+                <Link
+                  to={`/event/${featuredEvent._id}`}
+                  className="block relative rounded-3xl overflow-hidden bg-white shadow-2xl shadow-[#111827]/10 border border-[#E9E9E7] transition-all duration-500 hover:-translate-y-1.5 no-underline"
+                >
+                  {/* Event Cover Image */}
+                  <div className="relative h-72 sm:h-80 w-full overflow-hidden bg-[#111827]">
+                    <img
+                      src={featuredEvent.coverImage}
+                      alt={featuredEvent.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#111827] via-[#111827]/30 to-transparent" />
+
+                    {/* Top Badges */}
+                    <div className="absolute top-4 left-4 flex items-center gap-2">
+                      <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#F45B69] text-white shadow-md">
+                        Featured
+                      </span>
+                      {featuredEvent.category && (
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md text-white border border-white/20">
+                          {featuredEvent.category}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Pricing Pill */}
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold text-[#111827] shadow-sm">
+                      {featuredEvent.price ? `₦${Number(featuredEvent.price).toLocaleString()}` : "Free"}
+                    </div>
+
+                    {/* Overlaid Bottom Title */}
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <p className="text-xs font-medium text-white/80 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                        <CalendarIcon className="w-3.5 h-3.5 text-[#F45B69]" />
+                        <span>{featuredEvent.eventDate || "Upcoming Date"}</span>
+                      </p>
+                      <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white line-clamp-1">
+                        {featuredEvent.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Card Detail Strip */}
+                  <div className="p-4 sm:p-5 bg-white flex items-center justify-between border-t border-[#E9E9E7]">
+                    <div className="flex items-center gap-2 text-sm text-[#737783] max-w-[240px] truncate">
+                      <MapPinIcon className="w-4 h-4 text-[#8065E8] flex-shrink-0" />
+                      <span className="truncate">{featuredEvent.location || "Location not specified"}</span>
+                    </div>
+
+                    <div className="flex items-center gap-1 text-xs font-bold text-[#8065E8] group-hover:text-[#F45B69] transition-colors">
+                      <span>Get Ticket</span>
+                      <ArrowRightIcon className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                </Link>
+              ) : (
+                <div className="rounded-3xl p-8 bg-white border border-[#E9E9E7] shadow-xl text-center space-y-4">
+                  <div className="w-14 h-14 mx-auto rounded-2xl bg-[#8065E8]/10 flex items-center justify-center text-[#8065E8]">
+                    <TicketIcon className="w-7 h-7" />
+                  </div>
+                  <h3 className="text-xl font-bold text-[#111827]">Discover Live Events</h3>
+                  <p className="text-sm text-[#737783]">
+                    Explore concerts, tech summits, workshops, and exclusive parties across top cities.
+                  </p>
+                  <Link
+                    to="/events"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#111827] text-white text-sm font-semibold hover:bg-[#8065E8] transition-colors no-underline"
+                  >
+                    <span>Browse Catalog</span>
+                    <ArrowRightIcon className="w-4 h-4" />
+                  </Link>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

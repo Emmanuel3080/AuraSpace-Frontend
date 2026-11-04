@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 44" fill="none">
+  <defs>
+    <linearGradient id="logo-dark-grad" x1="6" y1="8" x2="38" y2="36" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#C4B5FD" />
+      <stop offset="60%" stopColor="#8065E8" />
+      <stop offset="100%" stopColor="#6344E7" />
+    </linearGradient>
+    <linearGradient id="logo-dark-ring" x1="4" y1="28" x2="40" y2="14" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stopColor="#8065E8" />
+      <stop offset="50%" stopColor="#B378F4" />
+      <stop offset="100%" stopColor="#F45B69" />
+    </linearGradient>
+  </defs>
+
+  <!-- Symbol -->
+  <g transform="translate(0, 0)">
+    <path d="M 6.5 24.5 C 5.5 21.5 8 18 14.5 15.5 C 22.5 12.5 32 12.5 36.5 15 C 38 16 38.5 17.5 37.5 19" stroke="url(#logo-dark-ring)" stroke-width="2.8" stroke-linecap="round" opacity="0.9" />
+    <circle cx="22" cy="22" r="12" stroke="url(#logo-dark-grad)" stroke-width="2.6" stroke-linecap="round" />
+    <path d="M 13.5 31.5 L 22 10.5 L 30.5 31.5" stroke="url(#logo-dark-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 17 23.5 L 27 23.5" stroke="url(#logo-dark-grad)" stroke-width="2.6" stroke-linecap="round" />
+    <path d="M 37.5 19 C 39 21.5 37 24.5 30.5 27.5 C 22.5 31 12.5 30.5 7.5 27.5 C 5.8 26.3 5.5 25 6.5 24" stroke="url(#logo-dark-ring)" stroke-width="3.2" stroke-linecap="round" />
+    <circle cx="22" cy="18" r="1.6" fill="#F45B69" />
+  </g>
+
+  <!-- Wordmark -->
+  <text x="54" y="29" font-family="'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" font-size="22" font-weight="800" letter-spacing="-0.5px" fill="#FFFFFF">Aura<tspan fill="#9D85FF">space</tspan></text>
+</svg>

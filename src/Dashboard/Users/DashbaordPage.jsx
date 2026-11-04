@@ -1,41 +1,26 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { authContext } from "../../Context/userContext";
 import Header from "../../Common/Header";
-
-import "../../userStyles/Dashbaord.css";
-
-import { motion } from "framer-motion";
 import HeroSection from "./Components/HeroSection";
 import ImageSlider from "./Components/ImageSlider";
 import WhatWeOffer from "../../Component/WhatWeOffer";
 import Footer from "../../Common/Footer";
+
 const DashbaordPage = () => {
-  const { userInfo, displayEvents, showEvents } = useContext(authContext);
+  const { displayEvents } = useContext(authContext);
 
   useEffect(() => {
-    const displayUserEvnts = async () => {
-      try {
-        await displayEvents();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    displayUserEvnts();
+    displayEvents();
   }, []);
+
   return (
-    <div>
+    <div className="min-h-screen bg-[#F7F6F2] flex flex-col">
       <Header />
-      <h1> Welcome {userInfo.name || "Guest"}</h1>
-
-      {/* <img src={userInfo.profileImage} alt="" width={200} height={200} /> */}
-
-      <HeroSection />
-
-      <ImageSlider />
-
-      <WhatWeOffer />
-
+      <main className="flex-grow">
+        <HeroSection />
+        <ImageSlider />
+        <WhatWeOffer />
+      </main>
       <Footer />
     </div>
   );

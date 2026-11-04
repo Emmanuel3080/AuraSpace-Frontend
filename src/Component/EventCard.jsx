@@ -1,83 +1,111 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CalendarIcon, MapPinIcon, TicketIcon } from "../Common/Icons";
 
-const EventCard = ({ image, title, location, eventId, eventdate }) => {
-  const eventTime = new Date(eventdate).getTime();
-  const hasEventPassed = eventTime < Date.now();
-  const formattedDate = !hasEventPassed
-    ? new Date(eventdate).toLocaleDateString("en-US", {
+const EventCard = ({
+  event,
+  image,
+  title,
+  location,
+  eventId,
+  eventdate,
+  price,
+  category,
+  organizer,
+}) => {
+  // Support both passed-in individual props and an event object
+  const _id = eventId || event?._id;
+  const _title = title || event?.title || "Untitled Event";
+  const _image = image || event?.coverImage || "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80";
+  const rawLoc = location || event?.location;
+  const _location =
+    !rawLoc || /^(tba|venue tba|location tba|to be announced|not specified)$/i.test(String(rawLoc).trim())
+      ? "Location not specified"
+      : String(rawLoc).trim();
+  const _date = eventdate || event?.eventDate || event?.startTime;
+  const _price = price !== undefined ? price : event?.price;
+  const _category = category || event?.category;
+  const _organizer = organizer || event?.createdBy?.OrganizerName;
+
+  const eventTime = _date ? new Date(_date).getTime() : 0;
+  const hasEventPassed = eventTime > 0 && eventTime < Date.now();
+
+  const formattedDate = _date
+    ? new Date(_date).toLocaleDateString("en-US", {
         weekday: "short",
-        year: "numeric",
         month: "short",
         day: "numeric",
       })
-    : null;
+    : "Date TBA";
 
   return (
-    <div>
-      <Link
-        to={`/event/${eventId}`}
-        className="group block bg-gradient-to-br no-underline from-indigo-50 via-white to-purple-50 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-      >
-        {/* Event Image + Overlay */}
-        <div className="relative h-56 overflow-hidden">
-          <img
-            src={image}
-            alt={title}
-            className="w-100 h-100 object-cover transform transition-transform duration-700 group-hover:scale-110"
-          />
+    <Link
+      to={`/event/${_id}`}
+      className="group block bg-white rounded-3xl overflow-hidden border border-[#E9E9E7] shadow-sm hover:shadow-xl hover:border-[#111827]/20 transition-all duration-300 transform hover:-translate-y-1 no-underline flex flex-col h-full"
+    >
+      {/* Event Imagery */}
+      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#111827]">
+        <img
+          src={_image}
+          alt={_title}
+          loading="lazy"
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#111827]/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
 
-          {/* Top overlay (Location badge) */}
-          <div className="absolute top-0 left-0 bg-white/15 backdrop-blur-sm px-1 py-0 rounded-md shadow-md border border-white/10 w-fit">
-            <i className="text-xs md:text-sm text-black font-normal font-sans">
-              {location}
-            </i>
+        {/* Top Floating Badges */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+          {_category ? (
+            <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-white/90 backdrop-blur-md text-[#111827] shadow-sm">
+              {_category}
+            </span>
+          ) : <span />}
+
+          <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-[#111827]/80 backdrop-blur-md text-white shadow-sm">
+            {_price > 0 ? `₦${Number(_price).toLocaleString()}` : "Free"}
+          </span>
+        </div>
+
+        {/* Expired Ribbon */}
+        {hasEventPassed && (
+          <div className="absolute inset-0 bg-[#111827]/80 backdrop-blur-xs flex items-center justify-center">
+            <span className="px-3 py-1.5 rounded-full bg-[#F45B69] text-white text-xs font-bold uppercase tracking-wider shadow">
+              Event Concluded
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Event Details Content */}
+      <div className="p-5 flex flex-col flex-1 justify-between space-y-4">
+        <div className="space-y-2">
+          {/* Date & Time pill */}
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#8065E8]">
+            <CalendarIcon className="w-3.5 h-3.5" />
+            <span>{formattedDate}</span>
           </div>
 
-          {/* Bottom overlay (Location) */}
-          {/* <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 transition-all duration-500 group-hover:from-purple-900/80">
-          <p className="text-base font-semibold text-white truncate">
-            {location}
-          </p>
-        </div> */}
+          {/* Title */}
+          <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-[#111827] group-hover:text-[#8065E8] transition-colors line-clamp-2 leading-snug">
+            {_title}
+          </h3>
         </div>
 
-        {/* Event Info Section */}
-        <div className="p-3 space-y-2 text-left">
-          <h2 className="text-2xl font-sans font-bold text-black group-hover:text-purple-700 transition-colors duration-300 line-clamp-1">
-            {title}
-          </h2>
-         
-          {hasEventPassed ? (
-            <div
-              style={{
-                background: "#fee2e2",
-                padding: "10px 16px",
-                borderRadius: "8px",
-                color: "#b91c1c",
-                fontWeight: "600",
-                fontSize: "14px",
-                textAlign: "center",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "fit-content",
-                boxShadow: "0 3px 8px rgba(185,28,28,0.15)",
-              }}
-            >
-              Event Closed
-            </div>
-          ) : (
-            <p className="text-sm text-gray-500 group-hover:text-indigo-600">
-              {formattedDate}
-            </p>
+        {/* Location & Host Footer */}
+        <div className="pt-3 border-t border-[#E9E9E7] flex items-center justify-between text-xs text-[#737783]">
+          <div className="flex items-center gap-1.5 truncate max-w-[180px]">
+            <MapPinIcon className="w-3.5 h-3.5 text-[#8065E8] flex-shrink-0" />
+            <span className="truncate">{_location}</span>
+          </div>
+
+          {_organizer && (
+            <span className="font-medium text-[#111827] truncate max-w-[100px]">
+              by {_organizer}
+            </span>
           )}
-          {/* <button className="mt-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full text-sm font-medium shadow hover:from-indigo-600 hover:to-purple-600 transition-all duration-500">
-          View Details
-        </button> */}
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 

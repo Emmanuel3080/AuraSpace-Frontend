@@ -1,104 +1,124 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import AuraspaceLogo from "./AuraspaceLogo";
+import { SparklesIcon, TicketIcon, ArrowRightIcon } from "./Icons";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-blue-950 via-indigo-900 to-violet-950 text-gray-200 py-14 px-6 md:px-20 mt-20 relative overflow-hidden">
-      {/* Gradient Glow Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.15),transparent_60%)] pointer-events-none"></div>
+    <footer className="bg-[#111827] text-white pt-16 pb-12 border-t border-[#111827]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+          {/* Brand Col */}
+          <div className="md:col-span-5 space-y-4">
+            <Link to="/user/dashboard" className="no-underline">
+              <AuraspaceLogo variant="light" size="lg" />
+            </Link>
 
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 relative z-10">
-        {/* Logo + Description */}
-        <div>
-          <h2 className="text-3xl font-bold text-white tracking-tight mb-3">
-            Aura<span className="text-indigo-400">Space</span>
-          </h2>
-          <p className="text-sm leading-relaxed text-gray-400">
-            Your gateway to unforgettable experiences. Discover, book, and enjoy
-            events that spark your passion.
-          </p>
-        </div>
+            <p className="text-[#737783] text-sm leading-relaxed max-w-sm">
+              The premium event marketplace connecting people with remarkable live concerts, tech summits, networking meetups, and creative workshops.
+            </p>
 
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Quick Links</h3>
-          <ul className="space-y-2">
-            {["Home", "Events", "About", "Contact"].map((link) => (
-              <li key={link}>
-                <a
-                  href={`/${link.toLowerCase()}`}
-                  className="text-gray-400 hover:text-indigo-400 hover:translate-x-1 transition-all duration-300 text-sm no-underline inline-block"
-                >
-                  {link}
-                </a>
+            <div className="pt-2 flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-white/80">
+                <SparklesIcon className="w-3.5 h-3.5 text-[#F45B69]" />
+                <span>Crafted for creators & attendees</span>
+              </span>
+            </div>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="md:col-span-2 space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+              Discover
+            </h4>
+            <ul className="space-y-2 text-sm text-[#737783] list-none p-0">
+              <li>
+                <Link to="/events" className="hover:text-white transition-colors no-underline">
+                  Explore Events
+                </Link>
               </li>
-            ))}
-          </ul>
-        </div>
+              <li>
+                <Link to="/events?category=Music" className="hover:text-white transition-colors no-underline">
+                  Concerts & Music
+                </Link>
+              </li>
+              <li>
+                <Link to="/events?category=Technology" className="hover:text-white transition-colors no-underline">
+                  Tech Conferences
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-white transition-colors no-underline">
+                  About Platform
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-        {/* Contact Info */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">
-            Get in Touch
-          </h3>
-          <div className="text-sm flex flex-col gap-3">
-            <div className="flex items-center gap-2 text-gray-400">
-              <i className="fa-solid fa-location-dot text-indigo-400"></i>
-              <span>Lagos, Nigeria</span>
-            </div>
+          {/* Organizers */}
+          <div className="md:col-span-2 space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+              Organizers
+            </h4>
+            <ul className="space-y-2 text-sm text-[#737783] list-none p-0">
+              <li>
+                <Link to="/admin/signup" className="hover:text-white transition-colors no-underline">
+                  Host an Event
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/signin" className="hover:text-white transition-colors no-underline">
+                  Organizer Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link to="/account" className="hover:text-white transition-colors no-underline">
+                  Payouts & Banking
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-            <div className="flex items-center gap-2">
-              <i className="fa-solid fa-envelope text-indigo-400"></i>
-              <a
-                href="https://mail.google.com/mail/?view=cm&fs=1&to=emmanuelabiodun041@gmail.com&su=Event%20Inquiry&body=Hello%20Emmanuel,"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="no-underline text-gray-300 hover:text-indigo-400 transition duration-300"
+          {/* Newsletter Box */}
+          <div className="md:col-span-3 space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+              Stay in the loop
+            </h4>
+            <p className="text-xs text-[#737783] leading-relaxed">
+              Get notified of early bird ticket drops and exclusive member-only access.
+            </p>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                alert("Thank you for subscribing to AuraSpace!");
+              }}
+              className="flex items-center gap-2"
+            >
+              <input
+                type="email"
+                required
+                placeholder="name@email.com"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-[#737783] text-xs outline-none focus:border-[#8065E8] transition-colors"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2.5 rounded-xl bg-[#8065E8] hover:bg-[#8065E8]/90 text-white font-semibold text-xs transition-colors flex-shrink-0 border-0 cursor-pointer"
               >
-                <i className="z-10">Email Me</i>
-              </a>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <i className="fa-solid fa-phone text-indigo-400"></i>
-              <a
-                href="https://wa.me/2348131203872"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="no-underline text-gray-300 hover:text-indigo-400 transition duration-300"
-              >
-                +234 813 120 3872
-              </a>
-            </div>
+                Join
+              </button>
+            </form>
           </div>
         </div>
 
-        {/* Social Media */}
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-3">Follow Us</h3>
-          <div className="flex items-center space-x-5">
-            {[
-              { icon: "fab fa-facebook-f", color: "hover:text-blue-500" },
-              { icon: "fab fa-twitter", color: "hover:text-sky-400" },
-              { icon: "fab fa-instagram", color: "hover:text-pink-500" },
-              { icon: "fab fa-linkedin-in", color: "hover:text-blue-400" },
-            ].map((s, i) => (
-              <a
-                key={i}
-                href="#"
-                className={`${s.color} text-gray-400 text-xl hover:scale-110 transition-transform duration-300`}
-              >
-                <i className={s.icon}></i>
-              </a>
-            ))}
+        {/* Bottom bar */}
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#737783]">
+          <p>© {new Date().getFullYear()} AuraSpace. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <span>Secure payments via Paystack</span>
+            <span>Lagos • Abuja • London</span>
           </div>
         </div>
-      </div>
-
-      {/* Divider */}
-      <div className="border-t border-gray-700 mt-12 pt-6 text-center text-sm text-gray-500 relative z-10">
-        © {new Date().getFullYear()}{" "}
-        <span className="text-indigo-400">AuraSpace Events</span>. All Rights
-        Reserved.
       </div>
     </footer>
   );

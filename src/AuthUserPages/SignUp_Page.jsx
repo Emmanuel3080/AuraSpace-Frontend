@@ -1,31 +1,37 @@
-import React, { use, useContext, useEffect } from "react";
-import { authContext } from "../Context/userContext";
-import "../AuthStyles/SignUp.css";
-import "../MediaQuery/SignupMedia.css";
-import { useState } from "react";
-import { set } from "react-hook-form";
-
+import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-// import {boo} from "bootstrap"
-import "bootstrap/dist/css/bootstrap.min.css";
+import { toast } from "sonner";
+import { authContext } from "../Context/userContext";
+import AuthLayout from "../Component/AuthLayout";
+import {
+  User,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  Upload,
+  ArrowRight,
+  Sparkles,
+  Camera,
+} from "lucide-react";
 
 const userSchema = yup.object({
-  name: yup.string().required("Name is required"),
-  email: yup.string().email("Invalid email").required("Email is required"),
+  name: yup.string().required("Full name is required"),
+  email: yup.string().email("Invalid email address").required("Email is required"),
   password: yup
     .string()
-    .required("Password Req uired")
-    .min(6, "Minimum of be Six Characters")
-    .matches(/[a-z]/, "Password must contain lowercase Letter"),
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter"),
 });
 
 const SignUp_Page = () => {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const { show, handleSignUp, submitting } = useContext(authContext);
+  const [showPassword, setShowPassword] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState(null);
+  const { handleSignUp, submitting } = useContext(authContext);
 
   const {
     register,
@@ -36,161 +42,177 @@ const SignUp_Page = () => {
   });
 
   const checkErrors = (err) => {
-    console.log(errors);
-
-    const firstError = Object.values(err)[0].message;
-    toast.error(firstError);
-  };
-
-  const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
+    const firstError = Object.values(err)[0]?.message;
+    toast.error(firstError || "Please check required fields");
   };
 
   return (
-    <section className="signUpPage">
-      <div className="signUpForm">
-        <form
-          className="formContainer"
-          onSubmit={handleSubmit(handleSignUp, checkErrors)}
-        >
-          <h1 style={{ textAlign: "center" }} className="formSignUpTitle">
-            Register Account
-          </h1>
-          {/* <h1 className="text-3xl text-red-400"> Emamnuekekek</h1> */}
-          <div>
-            <label htmlFor="">Name</label>
-            <div className="inputCont">
-              <div className="icon">
-                <i className="fa fa-user"></i>
-              </div>
-              <div className="inputGroup">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  className="formInputs"
-                  {...register("name")}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="">Email Address</label>
-            <div className="inputCont">
-              <div className="icon">
-                <i className="fa fa-envelope"></i>
-              </div>
-              <div className="inputGroup">
-                <input
-                  type="email"
-                  placeholder="Your Email Address"
-                  className="formInputs"
-                  {...register("email")}
-                />
-              </div>
-            </div>
-          </div>
-          <div>
-            <label htmlFor="">Password</label>
-            <div className="inputCont">
-              <div className="icon">
-                <i className="fa fa-lock"></i>
-              </div>
-              <div className="inputGroup">
-                <input
-                  type={isPasswordVisible ? "text" : "password"}
-                  placeholder="*****"
-                  className="formInputs"
-                  {...register("password")}
-                />
-              </div>{" "}
-              <span className="pass-toggle" onClick={togglePasswordVisibility}>
-                {isPasswordVisible ? (
-                  <div className="icon">
-                    <i className="fa fa-eye" aria-hidden="true"></i>
-                  </div>
-                ) : (
-                  <div className="icon">
-                    <i className="fa fa-eye-slash" aria-hidden="true"></i>
-                  </div>
-                )}
-                {/* <i class="fa fa-eye" aria-hidden="true"></i> */}
-              </span>
-              {/* </div> */}
-              {/* </div> */}
-            </div>
-          </div>
-          <div className="" style={{ marginBottom: "10px" }}>
-            <label htmlFor="">Upload Profile Picture</label>
-            <div className="inputCont">
-              <div className="icon">
-                <i className="fa fa-upload"></i>
-              </div>
-              <div className="inputGroup">
-                <input
-                  type="file"
-                  className="formInputs"
-                  {...register("profileImage")}
-                />
-              </div>
-            </div>
-            {/* <label htmlFor="fileUpload" className="custom-file-upload">
-              Upload Profile Picture
-            </label> */}
-          </div>
-
-          <div>
-            <button type="submit" className="btnSubmit" disabled={submitting}>
-              {submitting ? (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "4px",
-                  }}
-                >
-                  Creating Account{" "}
-                  <span
-                    className="spinner-border spinner-border-sm me-2 "
-                    role="status"
-                  >
-                    <span className="visually-hidden">Creating...</span>
-                  </span>
-                </div>
-              ) : (
-                "Create Account"
-              )}
-            </button>
-          </div>
-
-          <div className="orDivider">
-            <span></span>
-            <p>or</p>
-            <span></span>
-          </div>
-
-          <div>
-            <button type="button" className="googleBtn">
+    <AuthLayout
+      badge="Join AuraSpace"
+      badgeIcon={Sparkles}
+      title="Create attendee account"
+      description="Book tickets, download digital passes and follow your favorite experiences."
+      role="attendee"
+      heroHeadline="Every great experience starts here."
+      heroSubtext="Discover handpicked concerts, tech summits, and live festivals. Seamless ticketing, instant QR passes, and unforgettable memories."
+      heroImage="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=85"
+      heroTag="Live Experiences & Ticketing"
+      statNumber="50,000+"
+      statLabel="Verified digital tickets issued"
+    >
+      <form onSubmit={handleSubmit(handleSignUp, checkErrors)} className="space-y-4">
+        {/* Profile Avatar Upload */}
+        <div className="flex items-center gap-4 p-3 bg-[#F7F6F2] rounded-2xl border border-[#E9E9E7]">
+          <div className="w-13 h-13 rounded-full bg-white border border-[#E9E9E7] overflow-hidden flex items-center justify-center shrink-0 shadow-xs">
+            {avatarPreview ? (
               <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                alt="Google"
+                src={avatarPreview}
+                alt="Preview"
+                className="w-full h-full object-cover"
               />
-              Sign up with Google
-            </button>
+            ) : (
+              <User className="w-6 h-6 text-[#737783]" />
+            )}
           </div>
-
-          <div className="signInTextContainer">
-            <p className="signInText">
-              Already have an account ?{" "}
-              <a href="/user/signin" className="signInLink">
-                Sign In
-              </a>
+          <div className="min-w-0 flex-1">
+            <label
+              htmlFor="profileImage"
+              className="cursor-pointer inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E9E9E7] hover:border-[#8065E8] rounded-xl text-xs font-bold text-[#111827] shadow-xs transition"
+            >
+              <Camera className="w-3.5 h-3.5 text-[#8065E8]" />
+              <span>{avatarPreview ? "Change Photo" : "Upload Avatar"}</span>
+            </label>
+            <p className="text-[11px] text-[#737783] mt-1 truncate">
+              JPG or PNG, max 5MB (Optional)
             </p>
           </div>
-        </form>
+          <input
+            id="profileImage"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            {...register("profileImage")}
+            onChange={(e) => {
+              register("profileImage").onChange(e);
+              const file = e.target.files?.[0];
+              if (file) setAvatarPreview(URL.createObjectURL(file));
+            }}
+          />
+        </div>
+
+        {/* Full Name */}
+        <div>
+          <label className="block text-xs font-semibold text-[#111827] mb-1.5">
+            Full Name *
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#737783]">
+              <User className="w-4 h-4" />
+            </div>
+            <input
+              type="text"
+              placeholder="John Doe"
+              className="w-full pl-10 pr-3.5 py-3 bg-white border border-[#E9E9E7] rounded-xl text-sm text-[#111827] placeholder:text-[#737783]/60 focus:outline-none focus:border-[#8065E8] focus:ring-2 focus:ring-[#8065E8]/10 transition shadow-xs"
+              {...register("name")}
+            />
+          </div>
+          {errors.name && (
+            <p className="text-xs text-[#F45B69] mt-1.5 font-medium">{errors.name.message}</p>
+          )}
+        </div>
+
+        {/* Email Address */}
+        <div>
+          <label className="block text-xs font-semibold text-[#111827] mb-1.5">
+            Email Address *
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#737783]">
+              <Mail className="w-4 h-4" />
+            </div>
+            <input
+              type="email"
+              placeholder="name@example.com"
+              className="w-full pl-10 pr-3.5 py-3 bg-white border border-[#E9E9E7] rounded-xl text-sm text-[#111827] placeholder:text-[#737783]/60 focus:outline-none focus:border-[#8065E8] focus:ring-2 focus:ring-[#8065E8]/10 transition shadow-xs"
+              {...register("email")}
+            />
+          </div>
+          {errors.email && (
+            <p className="text-xs text-[#F45B69] mt-1.5 font-medium">{errors.email.message}</p>
+          )}
+        </div>
+
+        {/* Password */}
+        <div>
+          <label className="block text-xs font-semibold text-[#111827] mb-1.5">
+            Password *
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#737783]">
+              <Lock className="w-4 h-4" />
+            </div>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="At least 6 characters"
+              className="w-full pl-10 pr-10 py-3 bg-white border border-[#E9E9E7] rounded-xl text-sm text-[#111827] placeholder:text-[#737783]/60 focus:outline-none focus:border-[#8065E8] focus:ring-2 focus:ring-[#8065E8]/10 transition shadow-xs"
+              {...register("password")}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#737783] hover:text-[#111827] focus:outline-none cursor-pointer"
+            >
+              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+            </button>
+          </div>
+          {errors.password && (
+            <p className="text-xs text-[#F45B69] mt-1.5 font-medium">{errors.password.message}</p>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={submitting}
+          className="w-full py-3.5 px-4 bg-[#8065E8] hover:bg-[#6f54d6] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md shadow-[#8065E8]/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
+        >
+          {submitting ? (
+            <>
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span>Creating Account...</span>
+            </>
+          ) : (
+            <>
+              <span>Create Attendee Account</span>
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
+        </button>
+      </form>
+
+      {/* Switcher Links */}
+      <div className="mt-8 pt-6 border-t border-[#E9E9E7] space-y-3 text-center">
+        <p className="text-xs text-[#737783]">
+          Already have an account?{" "}
+          <Link
+            to="/user/signin"
+            className="text-[#8065E8] font-bold hover:underline no-underline"
+          >
+            Sign in
+          </Link>
+        </p>
+        <p className="text-xs text-[#737783]">
+          Are you hosting an experience?{" "}
+          <Link
+            to="/admin/signup"
+            className="text-[#111827] font-bold hover:underline no-underline inline-flex items-center gap-1"
+          >
+            <span>Register as Organizer</span>
+            <span>&rarr;</span>
+          </Link>
+        </p>
       </div>
-    </section>
+    </AuthLayout>
   );
 };
 

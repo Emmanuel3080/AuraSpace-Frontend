@@ -1,70 +1,90 @@
 import React, { useContext } from "react";
-import { adminAuthContext } from "../Context/adminAuthContext";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { adminAuthContext } from "../Context/adminAuthContext";
+import AuthLayout from "../Component/AuthLayout";
+import {
+  Mail,
+  ArrowRight,
+  ArrowLeft,
+  KeyRound,
+  ShieldCheck,
+} from "lucide-react";
 
 const AdminForgotPasswordpage = () => {
   const { handlePasswordReset, sendOtp } = useContext(adminAuthContext);
-
-  const { register, handleSubmit } = useForm({});
+  const { register, handleSubmit } = useForm();
 
   const handleSend = async (data) => {
     try {
       await handlePasswordReset(data);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
+
   return (
-    <div>
-      <div className="container">
-        <div className="passwordReset">
-          <h1>Reset Password Page</h1>
-          <p>
-            Enter your email address and we'll send you an OTP to reset your
-            password
-          </p>
-          <form className="userEmail" onSubmit={handleSubmit(handleSend)}>
-            <label htmlFor="">Email</label>
-            <div className="inputConts">
-              <div className="icon">
-                <i className="fa fa-envelope"></i>
-              </div>
-              <div className="inputGroup">
-                <input
-                  type="email"
-                  placeholder="Enter Your Email"
-                  required
-                  {...register("userEmail")}
-                  className="formInputs"
-                />
-              </div>
+    <AuthLayout
+      badge="Account Security"
+      badgeIcon={KeyRound}
+      title="Reset Password"
+      description="Enter your registered organizer email address to receive an account recovery code."
+      role="organizer"
+      heroHeadline="Protect your operations, venues, and revenues."
+      heroSubtext="AuraSpace enforces bank-grade account protections. We'll verify your identity through your registered organizer inbox."
+      heroImage="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1600&q=85"
+      heroTag="Account Protection"
+      statNumber="Secure"
+      statLabel="Verified OTP access for verified organizers"
+    >
+      <form onSubmit={handleSubmit(handleSend)} className="space-y-4">
+        <div>
+          <label className="block text-xs font-semibold text-[#111827] mb-1.5">
+            Organizer Email Address
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#737783]">
+              <Mail className="w-4 h-4" />
             </div>
-            <button type="submit">
-              {sendOtp ? (
-                <div>
-                  Sending Code{" "}
-                  <span
-                    className="spinner-border spinner-border-sm me-2 "
-                    role="status"
-                  >
-                    <span className="visually-hidden">Creating...</span>
-                  </span>
-                </div>
-              ) : (
-                "Send Code"
-              )}
-            </button>
-          </form>
-
-          <p>We'll send an OTP(One-Time Password) to this email address</p>
-
-          <div className="loginBack">
-            <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
-            <a href="/admin/signin">Back To login</a>
+            <input
+              type="email"
+              placeholder="name@example.com"
+              required
+              className="w-full pl-10 pr-3.5 py-3 bg-white border border-[#E9E9E7] rounded-xl text-sm text-[#111827] placeholder:text-[#737783]/60 focus:outline-none focus:border-[#111827] focus:ring-2 focus:ring-[#111827]/10 transition shadow-xs"
+              {...register("userEmail")}
+            />
           </div>
         </div>
+
+        <button
+          type="submit"
+          disabled={sendOtp}
+          className="w-full py-3.5 px-4 bg-[#111827] hover:bg-[#1f2937] text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md shadow-[#111827]/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2"
+        >
+          {sendOtp ? (
+            <>
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <span>Sending Code...</span>
+            </>
+          ) : (
+            <>
+              <span>Send Recovery Code</span>
+              <ArrowRight className="w-4 h-4" />
+            </>
+          )}
+        </button>
+      </form>
+
+      <div className="mt-8 pt-6 border-t border-[#E9E9E7] text-center">
+        <Link
+          to="/admin/signin"
+          className="inline-flex items-center gap-2 text-xs font-bold text-[#737783] hover:text-[#111827] no-underline transition"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Organizer Login</span>
+        </Link>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 

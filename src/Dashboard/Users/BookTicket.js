@@ -1,6 +1,8 @@
+const baseUrl = import.meta.env.VITE_API_URL || "https://auraspace-backend.onrender.com";
+
 export const BookTicket = async (eventId, quantity) => {
   try {
-    const response = await fetch(`https://auraspace-backend.onrender.com/user/book/ticket`, {
+    const response = await fetch(`${baseUrl}/user/book/ticket`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -10,11 +12,9 @@ export const BookTicket = async (eventId, quantity) => {
     });
 
     const data = await response.json();
-    // console.log(data);
-    
     return data;
-    // console.log(data);
   } catch (error) {
-    console.log(error);
+    console.error("BookTicket network error:", error);
+    return { success: false, Status: "Error", Message: "Network connection error. Please try again." };
   }
 };
