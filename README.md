@@ -1,12 +1,43 @@
-# React + Vite
+# AuraSpace 🎟️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AuraSpace is a full-stack event ticketing platform built with the MERN stack. It streamlines the end-to-end event experience — from event discovery and secure checkout to real-time ticket booking and availability management.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎫 Event discovery and browsing
+- 🔎 Event listing and search
+- 🔐 Secure user authentication and authorization
+- 👤 User profile management
+- 🎟️ Real-time ticket booking
+- 📊 Ticket availability management
+- 🚫 Overbooking prevention
+- 💳 Secure checkout
+- 🛡️ Protected administrative and transactional routes
+- 📱 Responsive, mobile-first interface
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Layer | Technology |
+|---|---|
+| Frontend | React.js |
+| Styling | Tailwind CSS |
+| Backend | Node.js, Express.js |
+| Database | MongoDB |
+| Authentication | JWT |
+| API | RESTful API |
+
+## ✨ Key Highlights
+
+- Designed and deployed a scalable RESTful API using Node.js, Express.js, and MongoDB to manage events, users, bookings, and transactional data.
+- Implemented robust authentication and authorization to protect sensitive user data and restricted routes.
+- Built a real-time inventory tracking system that dynamically updates ticket availability to prevent overbooking.
+- Developed a fully responsive, mobile-first frontend using React.js and Tailwind CSS.
+- Implemented an end-to-end ticketing workflow covering event discovery, booking, checkout, and ticket management.
+
+
+
+
+## 🌐 Live Demo
+
+- **Live Application:** [Project Link](https://aura-space-frontend.vercel.app/)
+
