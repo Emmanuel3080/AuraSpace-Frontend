@@ -206,9 +206,12 @@ const AuthProvider = ({ children }) => {
       });
 
       const data = await response.json();
-      setSingleBooking(data.booking);
+      const bookingRecord = data?.booking || data?.data || data?.bookedEvent || null;
+      setSingleBooking(bookingRecord);
+      return bookingRecord;
     } catch (error) {
-      console.log(error);
+      console.log("getSingleBooking error:", error);
+      return null;
     }
   };
 

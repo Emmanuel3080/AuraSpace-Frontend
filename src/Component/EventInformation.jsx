@@ -169,7 +169,7 @@ const EventInformation = ({
 
         if (bookingId) {
           localStorage.setItem("LatestBookingId", bookingId);
-          navigate(`/tickets/${bookingId}`);
+          navigate(`/tickets/${bookingId}`, { state: { autoDownload: true } });
         } else {
           navigate("/events");
         }

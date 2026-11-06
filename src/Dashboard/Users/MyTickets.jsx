@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { authContext } from "../../Context/userContext";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
 import { toast } from "sonner";
 import Header from "../../Common/Header";
 import Footer from "../../Common/Footer";
+import { generateTicketPDF } from "../../utils/ticketPdfGenerator";
 import {
   CalendarIcon,
   ClockIcon,
@@ -19,10 +18,12 @@ import {
 } from "../../Common/Icons";
 
 const MyTickets = () => {
-  const { getSingleBooking, singleBoooking } = useContext(authContext);
+  const { getSingleBooking, singleBoooking, showEvents, userInfo } = useContext(authContext);
   const { bookingId } = useParams();
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
+  const autoDownloadedRef = useRef(false);
 
   useEffect(() => {
     const fetchBooking = async () => {
@@ -30,7 +31,7 @@ const MyTickets = () => {
       try {
         await getSingleBooking(bookingId);
       } catch (err) {
-        console.error(err);
+        console.error("fetchBooking error:", err);
       } finally {
         setLoading(false);
       }
@@ -40,8 +41,23 @@ const MyTickets = () => {
     }
   }, [bookingId]);
 
-  const event = singleBoooking?.eventId;
-  const user = singleBoooking?.userId;
+  let savedUser = null;
+  try {
+    savedUser = JSON.parse(localStorage.getItem("user") || "null");
+  } catch (e) {
+    // fallback
+  }
+
+  // Robust fallbacks for event and user attributes
+  const event =
+    typeof singleBoooking?.eventId === "object" && singleBoooking?.eventId !== null
+      ? singleBoooking.eventId
+      : showEvents?.find((e) => e._id === singleBoooking?.eventId) || {};
+
+  const user =
+    typeof singleBoooking?.userId === "object" && singleBoooking?.userId !== null
+      ? singleBoooking.userId
+      : userInfo || savedUser || {};
 
   const formattedDate = event?.eventDate
     ? new Date(event.eventDate).toLocaleDateString("en-US", {
@@ -55,14 +71,21 @@ const MyTickets = () => {
   const formatTime = (time) => {
     if (!time) return "TBA";
     try {
-      const [hours, minutes] = time.split(":");
-      const date = new Date();
-      date.setHours(hours);
-      date.setMinutes(minutes);
-      return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      if (time.includes(":")) {
+        const [hours, minutes] = time.split(":");
+        const date = new Date();
+        date.setHours(parseInt(hours, 10));
+        date.setMinutes(parseInt(minutes, 10));
+        return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      }
+      const d = new Date(time);
+      if (!isNaN(d.getTime())) {
+        return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      }
     } catch {
-      return time;
+      // fallback
     }
+    return time;
   };
 
   const startTime = formatTime(event?.startTime);
@@ -99,37 +122,41 @@ const MyTickets = () => {
     }
   };
 
-  // Download PDF
-  const downloadPDF = () => {
-    const input = document.getElementById("ticket-stub");
-    if (!input) return;
-
+  // Download high-resolution vector PDF ticket
+  const downloadPDF = async () => {
     setDownloading(true);
     toast.info("Generating high-resolution PDF pass...");
 
-    html2canvas(input, {
-      backgroundColor: "#111827",
-      scale: 2.5,
-      useCORS: true,
-    })
-      .then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-        pdf.addImage(imgData, "PNG", 0, 10, pdfWidth, pdfHeight);
-        pdf.save(`AuraSpace-Pass-${singleBoooking?._id || "ticket"}.pdf`);
-        toast.success("Ticket downloaded successfully!");
-      })
-      .catch((err) => {
-        console.error("PDF generation failed:", err);
-        toast.error("Failed to generate PDF ticket.");
-      })
-      .finally(() => {
-        setDownloading(false);
+    try {
+      await generateTicketPDF({
+        booking: singleBoooking?._id ? singleBoooking : { _id: bookingId },
+        event,
+        user,
       });
+      toast.success("Ticket downloaded successfully!");
+    } catch (err) {
+      console.error("PDF generation failed:", err);
+      toast.error("Failed to generate PDF ticket. Please try again.");
+    } finally {
+      setDownloading(false);
+    }
   };
+
+  // Auto-download ticket on initial purchase redirect if requested
+  useEffect(() => {
+    if (
+      location.state?.autoDownload &&
+      !loading &&
+      (singleBoooking?._id || bookingId) &&
+      !autoDownloadedRef.current
+    ) {
+      autoDownloadedRef.current = true;
+      const timer = setTimeout(() => {
+        downloadPDF();
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [location.state, loading, singleBoooking, bookingId]);
 
   if (loading) {
     return (
@@ -255,9 +282,11 @@ const MyTickets = () => {
                   Attendee
                 </span>
                 <span className="font-bold text-base text-white">
-                  {user?.name || "Attendee Guest"}
+                  {user?.name || user?.fullName || singleBoooking?.userName || singleBoooking?.attendeeName || "Attendee Guest"}
                 </span>
-                <span className="text-xs text-[#737783] block">{user?.email}</span>
+                <span className="text-xs text-[#737783] block">
+                  {user?.email || singleBoooking?.userEmail || ""}
+                </span>
               </div>
 
               <div className="flex items-center justify-center sm:justify-start gap-4 text-xs">
@@ -266,7 +295,7 @@ const MyTickets = () => {
                     Quantity
                   </span>
                   <span className="font-bold text-white">
-                    {singleBoooking?.quantity || 1} Pass
+                    {singleBoooking?.quantity || 1} {(singleBoooking?.quantity || 1) === 1 ? "Pass" : "Passes"}
                   </span>
                 </div>
                 <div>
@@ -274,7 +303,7 @@ const MyTickets = () => {
                     Paid
                   </span>
                   <span className="font-bold text-[#8065E8]">
-                    ₦{singleBoooking?.totalPrice?.toLocaleString() || 0}
+                    ₦{Number(singleBoooking?.totalPrice ?? singleBoooking?.amount ?? singleBoooking?.price ?? 0).toLocaleString()}
                   </span>
                 </div>
               </div>

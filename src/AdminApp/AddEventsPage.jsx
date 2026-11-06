@@ -156,7 +156,7 @@ const AddEventsPage = () => {
           onSubmit={handleSubmit(CreateEvent, handleError)}
           className="bg-white p-6 sm:p-10 rounded-3xl border border-[#E9E9E7] shadow-sm space-y-8"
         >
-          {import.meta.env.DEV && (
+          {/* {import.meta.env.DEV && (
             <div className="flex justify-end">
               <button
                 type="button"
@@ -166,7 +166,7 @@ const AddEventsPage = () => {
                 Fill with sample event (dev)
               </button>
             </div>
-          )}
+          )} */}
 
           {/* STEP 1: Basic Information */}
           {step === 1 && (
